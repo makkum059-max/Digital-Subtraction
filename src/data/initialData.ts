@@ -377,7 +377,7 @@ export const INITIAL_SETTINGS: SiteSettings = {
   feature3Subtitle: '২৪-৪৮ ঘণ্টার মধ্যে হোম ডেলিভারি',
   feature4Title: 'ক্যাশ অন ডেলিভারি',
   feature4Subtitle: 'পণ্য বুঝে পেয়ে মূল্য পরিশোধের সুবিধা',
-  ziniPayApiKey: 'sandbox_test_8f4c9a2e7b31',
+  ziniPayApiKey: 'fd8abaf117ac2211d2a0b5a45a453e39cbbe71fe58b0d9c4',
   ziniPayEndpoint: 'https://api.zinipay.com/v1/payment/create',
   ziniPayVerifyEndpoint: 'https://api.zinipay.com/v1/payment/verify',
   ziniPayRedirectUrl: 'https://litchibag.com/payment/success',

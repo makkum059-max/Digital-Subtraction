@@ -27,6 +27,7 @@ import {
   CheckCircle2,
   Award,
   Clock,
+  Zap,
 } from 'lucide-react';
 import { THEME_PRESETS, ThemePreset, applyTheme } from '../../utils/theme';
 import { CustomPaymentMethod, SocialLink } from '../../types';
@@ -115,7 +116,7 @@ export const SettingsManager: React.FC = () => {
   const [sslSealImage, setSslSealImage] = useState(settings.sslSealImage || '');
 
   // ZiniPay Payment Gateway State
-  const [ziniPayApiKey, setZiniPayApiKey] = useState(settings.ziniPayApiKey || 'sandbox_test_8f4c9a2e7b31');
+  const [ziniPayApiKey, setZiniPayApiKey] = useState(settings.ziniPayApiKey || 'fd8abaf117ac2211d2a0b5a45a453e39cbbe71fe58b0d9c4');
   const [ziniPayEndpoint, setZiniPayEndpoint] = useState(settings.ziniPayEndpoint || 'https://api.zinipay.com/v1/payment/create');
   const [ziniPayVerifyEndpoint, setZiniPayVerifyEndpoint] = useState(settings.ziniPayVerifyEndpoint || 'https://api.zinipay.com/v1/payment/verify');
   const [ziniPayRedirectUrl, setZiniPayRedirectUrl] = useState(settings.ziniPayRedirectUrl || 'https://litchibag.com/payment/success');
@@ -1173,176 +1174,105 @@ export const SettingsManager: React.FC = () => {
           </div>
         )}
 
-        {/* TAB 3: PAYMENT & GATEWAY */}
+        {/* TAB 3: AUTOMATED ZINIPAY PAYMENT GATEWAY CONTROL PANEL */}
         {activeTab === 'payment' && (
           <div className="space-y-5 animate-fade-in">
-            {/* Custom Payment Methods */}
-            <div className="bg-white p-5 rounded-3xl border border-gray-200 shadow-2xs space-y-4">
-              <div className="flex items-center justify-between border-b border-gray-100 pb-2.5">
-                <h4 className="font-black text-gray-900 text-sm flex items-center gap-2">
-                  <Plus className="w-4 h-4 text-emerald-600" />
-                  <span>কাস্টম পেমেন্ট মেথড (Custom Payment Methods & QR)</span>
-                </h4>
-                <button
-                  type="button"
-                  onClick={handleAddPaymentMethod}
-                  className="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl font-bold text-xs flex items-center gap-1 shadow-2xs transition-colors cursor-pointer"
-                >
-                  <Plus className="w-3.5 h-3.5" />
-                  <span>পেমেন্ট মেথড যোগ করুন</span>
-                </button>
+            <div className="bg-gradient-to-r from-purple-900 via-indigo-900 to-slate-900 p-6 rounded-3xl text-white shadow-xl space-y-4">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-white/15 pb-4">
+                <div className="flex items-center gap-3">
+                  <div className="p-3 bg-purple-500/20 rounded-2xl border border-purple-400/30 text-purple-300">
+                    <Zap className="w-6 h-6 text-amber-400 animate-pulse fill-amber-300" />
+                  </div>
+                  <div>
+                    <h4 className="font-black text-base text-white flex items-center gap-2">
+                      <span>ZiniPay অটোমেটিক পেমেন্ট গেটওয়ে কন্ট্রোল প্যানেল</span>
+                    </h4>
+                    <p className="text-xs text-purple-200/90 font-medium">
+                      bKash, Nagad, Rocket, Upay, Visa & Mastercard অটোমেটিক পেমেন্ট সিস্টেম কনফিগারেশন
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-2 bg-emerald-500/20 border border-emerald-400/30 px-3.5 py-1.5 rounded-full self-start sm:self-center">
+                  <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping"></span>
+                  <span className="text-xs font-black text-emerald-300">ZiniPay API 2.0 Active</span>
+                </div>
               </div>
 
-              <div className="space-y-3">
-                {customPaymentMethods.map((pm, index) => (
-                  <div key={pm.id} className="p-4 bg-gray-50 rounded-2xl border border-gray-200 space-y-3">
-                    <div className="flex items-center justify-between border-b border-gray-200/80 pb-2">
-                      <div className="flex items-center gap-2">
-                        <span className="w-6 h-6 rounded-lg bg-emerald-100 text-emerald-800 font-black text-xs flex items-center justify-center">
-                          #{index + 1}
-                        </span>
-                        <span className="font-bold text-gray-800">{pm.name}</span>
-                      </div>
-                      <button
-                        type="button"
-                        onClick={() => handleRemovePaymentMethod(pm.id)}
-                        className="text-red-600 hover:text-red-800 font-bold text-xs flex items-center gap-1 cursor-pointer"
-                      >
-                        <Trash2 className="w-3.5 h-3.5" />
-                        <span>ডিলিট</span>
-                      </button>
-                    </div>
+              {/* ZiniPay API Credentials & Endpoints */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs pt-1">
+                <div>
+                  <label className="block font-bold text-purple-200 mb-1">zini-api-key (API Key) *</label>
+                  <input
+                    type="text"
+                    value={ziniPayApiKey}
+                    onChange={(e) => setZiniPayApiKey(e.target.value)}
+                    placeholder="sandbox_test_8f4c9a2e7b31"
+                    className="w-full px-3.5 py-2.5 bg-black/40 border border-purple-500/40 rounded-xl font-mono text-xs font-bold text-emerald-300 focus:outline-none focus:border-emerald-400"
+                  />
+                  <p className="text-[10px] text-purple-300/80 mt-1">
+                    * ZiniPay মার্চেন্ট প্যানেল থেকে প্রাপ্ত আপনার এপিআই কি।
+                  </p>
+                </div>
 
-                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-                      <div>
-                        <label className="block text-[10px] font-bold text-gray-600 mb-1">পেমেন্ট মেথড নাম:</label>
-                        <input
-                          type="text"
-                          value={pm.name}
-                          onChange={(e) =>
-                            setCustomPaymentMethods(
-                              customPaymentMethods.map((item) => (item.id === pm.id ? { ...item, name: e.target.value } : item))
-                            )
-                          }
-                          className="w-full px-3 py-1.5 bg-white border border-gray-300 rounded-xl text-xs font-bold"
-                        />
-                      </div>
-                      <div>
-                        <label className="block text-[10px] font-bold text-gray-600 mb-1">একাউন্ট টাইপ:</label>
-                        <select
-                          value={pm.accountType || 'Personal'}
-                          onChange={(e) =>
-                            setCustomPaymentMethods(
-                              customPaymentMethods.map((item) => (item.id === pm.id ? { ...item, accountType: e.target.value } : item))
-                            )
-                          }
-                          className="w-full px-3 py-1.5 bg-white border border-gray-300 rounded-xl text-xs font-bold"
-                        >
-                          <option value="Personal">Personal (পার্সোনাল)</option>
-                          <option value="Agent">Agent (এজেন্ট)</option>
-                          <option value="Merchant">Merchant (মার্চেন্ট)</option>
-                          <option value="Bank">Bank Account (ব্যাংক)</option>
-                        </select>
-                      </div>
-                      <div>
-                        <label className="block text-[10px] font-bold text-gray-600 mb-1">একাউন্ট নম্বর:</label>
-                        <input
-                          type="text"
-                          value={pm.accountNumber}
-                          onChange={(e) =>
-                            setCustomPaymentMethods(
-                              customPaymentMethods.map((item) => (item.id === pm.id ? { ...item, accountNumber: e.target.value } : item))
-                            )
-                          }
-                          className="w-full px-3 py-1.5 bg-white border border-gray-300 rounded-xl text-xs font-mono font-bold"
-                        />
-                      </div>
-                    </div>
+                <div>
+                  <label className="block font-bold text-purple-200 mb-1">Create Payment Endpoint (/v1/payment/create)</label>
+                  <input
+                    type="text"
+                    value={ziniPayEndpoint}
+                    onChange={(e) => setZiniPayEndpoint(e.target.value)}
+                    placeholder="https://api.zinipay.com/v1/payment/create"
+                    className="w-full px-3.5 py-2.5 bg-black/40 border border-purple-500/40 rounded-xl font-mono text-xs text-purple-100 focus:outline-none focus:border-purple-400"
+                  />
+                </div>
 
-                    {/* Image Upload Row: Payment Icon/Logo + QR Code */}
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2 border-t border-gray-200/60">
-                      {/* 1. Payment Icon / Logo Upload */}
-                      <div className="bg-white p-3 rounded-xl border border-gray-200 space-y-2">
-                        <label className="block text-[11px] font-bold text-gray-700 flex items-center justify-between">
-                          <span>পেমেন্ট আইকন/লোগো (Payment Logo):</span>
-                          {pm.logoImage && (
-                            <button
-                              type="button"
-                              onClick={() => handleRemovePaymentLogo(pm.id)}
-                              className="text-red-600 hover:text-red-800 text-[10px] font-black underline flex items-center gap-1 cursor-pointer"
-                            >
-                              <Trash2 className="w-3 h-3" />
-                              <span>রিমুভ আইকন</span>
-                            </button>
-                          )}
-                        </label>
-                        <div className="flex items-center gap-2">
-                          {pm.logoImage ? (
-                            <img
-                              src={pm.logoImage}
-                              alt={pm.name}
-                              className="w-10 h-10 object-contain rounded-lg border border-gray-200 bg-gray-50 p-1 shrink-0"
-                            />
-                          ) : (
-                            <div className="w-10 h-10 rounded-lg border border-dashed border-gray-300 bg-gray-50 text-gray-400 font-bold text-[10px] flex items-center justify-center shrink-0">
-                              No Icon
-                            </div>
-                          )}
-                          <label className="flex-1 cursor-pointer bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-300 rounded-xl py-1.5 px-2 text-center text-xs font-bold transition-colors flex items-center justify-center gap-1">
-                            <Upload className="w-3.5 h-3.5" />
-                            <span>লোগো আপলোড</span>
-                            <input
-                              type="file"
-                              accept="image/*"
-                              className="hidden"
-                              onChange={(e) => handlePaymentLogoUpload(pm.id, e)}
-                            />
-                          </label>
-                        </div>
-                      </div>
+                <div>
+                  <label className="block font-bold text-purple-200 mb-1">Verify Payment Endpoint (/v1/payment/verify)</label>
+                  <input
+                    type="text"
+                    value={ziniPayVerifyEndpoint}
+                    onChange={(e) => setZiniPayVerifyEndpoint(e.target.value)}
+                    placeholder="https://api.zinipay.com/v1/payment/verify"
+                    className="w-full px-3.5 py-2.5 bg-black/40 border border-purple-500/40 rounded-xl font-mono text-xs text-purple-100 focus:outline-none focus:border-purple-400"
+                  />
+                </div>
 
-                      {/* 2. QR Code Image Upload */}
-                      <div className="bg-white p-3 rounded-xl border border-gray-200 space-y-2">
-                        <label className="block text-[11px] font-bold text-gray-700 flex items-center justify-between">
-                          <span>পেমেন্ট QR কোড ছবি (QR Code Image):</span>
-                          {pm.qrCodeImage && (
-                            <button
-                              type="button"
-                              onClick={() => handleRemovePaymentQr(pm.id)}
-                              className="text-red-600 hover:text-red-800 text-[10px] font-black underline flex items-center gap-1 cursor-pointer"
-                            >
-                              <Trash2 className="w-3 h-3" />
-                              <span>রিমুভ QR</span>
-                            </button>
-                          )}
-                        </label>
-                        <div className="flex items-center gap-2">
-                          {pm.qrCodeImage ? (
-                            <img
-                              src={pm.qrCodeImage}
-                              alt={`${pm.name} QR`}
-                              className="w-10 h-10 object-contain rounded-lg border border-gray-200 bg-gray-50 p-1 shrink-0"
-                            />
-                          ) : (
-                            <div className="w-10 h-10 rounded-lg border border-dashed border-gray-300 bg-gray-50 text-gray-400 font-bold text-[10px] flex items-center justify-center shrink-0">
-                              No QR
-                            </div>
-                          )}
-                          <label className="flex-1 cursor-pointer bg-blue-50 hover:bg-blue-100 text-blue-800 border border-blue-300 rounded-xl py-1.5 px-2 text-center text-xs font-bold transition-colors flex items-center justify-center gap-1">
-                            <Upload className="w-3.5 h-3.5" />
-                            <span>QR কোড আপলোড</span>
-                            <input
-                              type="file"
-                              accept="image/*"
-                              className="hidden"
-                              onChange={(e) => handlePaymentQrUpload(pm.id, e)}
-                            />
-                          </label>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                ))}
+                <div>
+                  <label className="block font-bold text-purple-200 mb-1">Webhook URL (/api/zinipay/webhook)</label>
+                  <input
+                    type="text"
+                    value={ziniPayWebhookUrl}
+                    onChange={(e) => setZiniPayWebhookUrl(e.target.value)}
+                    placeholder="https://litchibag.com/api/zinipay/webhook"
+                    className="w-full px-3.5 py-2.5 bg-black/40 border border-purple-500/40 rounded-xl font-mono text-xs text-purple-100 focus:outline-none focus:border-purple-400"
+                  />
+                </div>
+              </div>
+
+              {/* Status Banner */}
+              <div className="pt-2 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-3 bg-white/5 p-3.5 rounded-2xl border border-white/10">
+                <div className="flex items-center gap-2 text-xs">
+                  <ShieldCheck className="w-5 h-5 text-emerald-400 shrink-0" />
+                  <span className="text-gray-200">
+                    ম্যানুয়াল পেমেন্ট অপশন বাদ দিয়ে সম্পূর্ণ অটোমেটিক <strong>ZiniPay Gateway</strong> সক্রিয় করা হয়েছে।
+                  </span>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => {
+                    updateSettings({
+                      ziniPayApiKey,
+                      ziniPayEndpoint,
+                      ziniPayVerifyEndpoint,
+                      ziniPayWebhookUrl,
+                      ziniPayEnabled: true,
+                    });
+                    showToast('⚡ ZiniPay গেটওয়ে কনফিগারেশন সেভ হয়েছে!', 'success');
+                  }}
+                  className="px-4 py-2 bg-gradient-to-r from-emerald-500 to-teal-400 hover:from-emerald-400 hover:to-teal-300 text-gray-950 font-black text-xs rounded-xl shadow-lg transition-all cursor-pointer whitespace-nowrap"
+                >
+                  গেটওয়ে সেটিং সেভ করুন
+                </button>
               </div>
             </div>
           </div>

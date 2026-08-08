@@ -1,0 +1,117 @@
+@import "tailwindcss";
+
+:root {
+  --theme-primary: #dc2626;
+  --theme-hover: #b91c1c;
+  --theme-light: #fef2f2;
+  --theme-border: #fecaca;
+  --theme-text: #991b1b;
+  --theme-gradient: linear-gradient(135deg, #dc2626, #b91c1c);
+  --theme-dark-gradient: linear-gradient(135deg, #b91c1c, #111827);
+}
+
+.bg-theme-primary {
+  background-color: var(--theme-primary) !important;
+}
+.bg-theme-gradient {
+  background-image: var(--theme-gradient) !important;
+}
+.bg-theme-dark-gradient {
+  background-image: var(--theme-dark-gradient) !important;
+}
+.hover\:bg-theme-hover:hover {
+  background-color: var(--theme-hover) !important;
+}
+.text-theme-primary {
+  color: var(--theme-primary) !important;
+}
+.border-theme-primary {
+  border-color: var(--theme-primary) !important;
+}
+.bg-theme-light {
+  background-color: var(--theme-light) !important;
+}
+.border-theme-border {
+  border-color: var(--theme-border) !important;
+}
+.text-theme-text {
+  color: var(--theme-text) !important;
+}
+
+@layer utilities {
+  @keyframes slideUp {
+    from {
+      opacity: 0;
+      transform: translateY(16px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes slideLeft {
+    from {
+      transform: translateX(100%);
+    }
+    to {
+      transform: translateX(0);
+    }
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  .animate-slide-up {
+    animation: slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  .animate-slide-left {
+    animation: slideLeft 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  .animate-fade-in {
+    animation: fadeIn 0.25s ease-out forwards;
+  }
+
+  .animate-spin-slow {
+    animation: spin 8s linear infinite;
+  }
+
+  @keyframes marquee {
+    0% { transform: translateX(0%); }
+    100% { transform: translateX(-50%); }
+  }
+
+  .animate-marquee {
+    display: flex;
+    width: max-content;
+    animation: marquee 28s linear infinite;
+  }
+
+  .animate-marquee:hover {
+    animation-play-state: paused;
+  }
+}
+
+/* Custom scrollbar styling */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--theme-primary, #dc2626);
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--theme-hover, #b91c1c);
+}

@@ -1,0 +1,53 @@
+{
+  "entities": {
+    "users": {
+      "title": "User Profiles",
+      "description": "Registered user accounts and profile details",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "email": { "type": "string" },
+        "displayName": { "type": "string" },
+        "photoURL": { "type": "string" },
+        "role": { "type": "string" },
+        "createdAt": { "type": "string" },
+        "lastLoginAt": { "type": "string" }
+      },
+      "required": ["email"]
+    },
+    "orders": {
+      "title": "Customer Orders",
+      "description": "Store purchases and order history",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "customerName": { "type": "string" },
+        "phone": { "type": "string" },
+        "address": { "type": "string" },
+        "district": { "type": "string" },
+        "items": { "type": "array" },
+        "totalAmount": { "type": "number" },
+        "status": { "type": "string" },
+        "paymentMethod": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["phone", "items", "totalAmount"]
+    },
+    "store_backups": {
+      "title": "Store Backups & Cloud Sync",
+      "description": "Full store data snapshots synced to Firebase",
+      "type": "object",
+      "properties": {
+        "adminEmail": { "type": "string" },
+        "products": { "type": "array" },
+        "categories": { "type": "array" },
+        "banners": { "type": "array" },
+        "settings": { "type": "object" },
+        "orders": { "type": "array" },
+        "timestamp": { "type": "string" }
+      },
+      "required": ["timestamp"]
+    }
+  }
+}
